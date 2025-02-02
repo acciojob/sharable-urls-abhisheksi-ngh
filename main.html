@@ -3,23 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shareable URL generator</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Shareable URL Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h3 id="url">https://localhost:8080/</h3>
         <form id="urlform">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="enter your name">
+            <input type="text" id="name" name="name" placeholder="Enter your name">
             <label for="year">Year:</label>
-            <input type="number" id="year" name="year" placeholder="enter a year">
+            <input type="number" id="year" name="year" placeholder="Enter a year">
             <button type="submit" id="button">Submit</button> 
-            
         </form>
-        
     </div>
-    <!-- <script src="./index.js"></script> -->
     
+    <script>
+        document.getElementById("urlform").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            let name = document.getElementById("name").value.trim();
+            let year = document.getElementById("year").value.trim();
+            
+            let baseURL = "https://localhost:8080/";
+            let queryString = new URLSearchParams();
+            
+            if (name) queryString.append("name", name);
+            if (year) queryString.append("year", year);
+            
+            let fullURL = baseURL + (queryString.toString() ? "?" + queryString.toString() : "");
+            
+            document.getElementById("url").textContent = fullURL;
+        });
+    </script>
 </body>
 </html>
